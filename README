@@ -1,0 +1,9 @@
+Welcome to the implementation of the CubanSea Search Interface
+
+This is an experimental project. In order to run the program, make sure that
+you are connected to the internet and that Grails 1.1+ & Java 1.6+ are properly
+installed and all environment variables are set. Then run
+   grails run-app
+and point your browser to http://localhost:8080/CubanSea. Please note that the
+interface currently supports only Firefox 3+. Other browser support will be
+added later.
