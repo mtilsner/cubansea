@@ -13,11 +13,9 @@ public interface SearchEngine {
 	/**
 	 * Creates a new search based on a specific list of search terms.
 	 * @param searchTerms List of search terms.
-	 * @param initialLoad Number of elements that are to be fetched
-	 * 					  upon initialization.
 	 * @return Search
 	 * @throws SearchEngineException
 	 * @see Search
 	 */
-    public abstract Search createSearch(List<String> searchTerms, int initialLoad) throws SearchEngineException;
+    public abstract Search createSearch(List<String> searchTerms) throws SearchEngineException;
 }

@@ -26,7 +26,9 @@ import com.yahoo.search.WebSearchResults;
  * 
  * @author Matthias Tilsner
  */
-public class YahooSearch implements Search {
+class YahooSearch implements Search {
+	
+	public static final int REQUEST_SIZE = 50;
 	
 	private String query;
 	private List<SearchResult> results = new ArrayList<SearchResult>();
@@ -107,15 +109,8 @@ public class YahooSearch implements Search {
 	private WebSearchRequest createNextRequest() {
 		WebSearchRequest _request = new WebSearchRequest(query);
 		_request.setStart(BigInteger.valueOf(cacheStatus+1));					//Yahoo API starts index with 1, not with 0
-		_request.setResults(getFetchBlockSize());
+		_request.setResults(REQUEST_SIZE);
 		return _request;
 	}
 
-	/* (non-Javadoc)
-	 * @see eu.tilsner.cubansea.search.Search#getFetchBlockSize()
-	 */
-	@Override
-	public int getFetchBlockSize() {
-		return 50;
-	}
 }

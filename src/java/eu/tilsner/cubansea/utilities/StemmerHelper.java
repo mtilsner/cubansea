@@ -9,6 +9,7 @@ import eu.tilsner.cubansea.utilities.external.PorterStemmer;
  * @author Matthias Tilsner
  */
 public class StemmerHelper {
+
 	public static String stem(String origin) {
 		PorterStemmer stemmer = new PorterStemmer();
 		char[] letters = origin.toCharArray();

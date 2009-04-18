@@ -95,7 +95,6 @@ public class Search {
 		for(Map.Entry<Cluster,List<Result>> _entry: _assignments.entrySet()) {
 			_entry.getKey().addResults(_entry.getValue());
 		}
-		//guessResultCounts();
 		return _assignments;
 	}
 	
@@ -144,9 +143,11 @@ public class Search {
 			configuration		= config;
 			terms				= _terms;
 			prepAlgorithm		= config.getPreparationAlgorithm();
+			prepAlgorithm.setConfiguration(config);
 			clusterAlgorithm	= config.getClusteringAlgorithm();
+			clusterAlgorithm.setConfiguration(config);
 			cacheStatus			= config.getClusteringBase();
-			search				= config.getSearchEngine().createSearch(terms, cacheStatus);
+			search				= config.getSearchEngine().createSearch(terms);
 			List<SearchResult> _sres	= search.getResults(0, cacheStatus);
 			List<PreparedResult> _pres	= prepAlgorithm.prepareResults(_sres);
 			Collection<eu.tilsner.cubansea.cluster.Cluster> _clusters = 

@@ -8,14 +8,13 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import eu.tilsner.cubansea.cluster.Cluster;
+import eu.tilsner.cubansea.prepare.PreparationHelper;
 import eu.tilsner.cubansea.prepare.PreparedResult;
 
 public class CollapsableSimpleFuzzyKMeansClusteringAlgorithm extends SimpleFuzzyKMeansClusteringAlgorithm {
 
 	static Logger logger = Logger.getLogger(CollapsableSimpleFuzzyKMeansClusteringAlgorithm.class.getName());
 
-	public static final double MIN_DISTANCE = 0.0001;
-	
 	@Override
 	protected Collection<Cluster> processClusterBase(Collection<Cluster> _clusters) {
 		while(collapseNextCluster(_clusters)) {
@@ -27,13 +26,13 @@ public class CollapsableSimpleFuzzyKMeansClusteringAlgorithm extends SimpleFuzzy
 	private boolean collapseNextCluster(Collection<Cluster> _clusters) {
 		for(Cluster _base : _clusters) {
 			for(Cluster _compare : _clusters) {
-				if(_base != _compare && getEucledianDistance(_base.getCentroid(),_compare.getCentroid()) < MIN_DISTANCE) {
-					logger.debug("Collapsed clusters with distance "+getEucledianDistance(_base.getCentroid(),_compare.getCentroid()));
+				if(_base != _compare && getDistanceAlgorithm().getDistance(_base.getCentroid(),_compare.getCentroid()) < getConfiguration().getMinimalClusterDistance()) {
+					logger.debug("Collapsed clusters with distance "+getDistanceAlgorithm().getDistance(_base.getCentroid(),_compare.getCentroid()));
 					_base.getCentroid().setAllFrequencies(getMiddle(_base.getCentroid(),_compare.getCentroid()));
 					_clusters.remove(_compare);
 					return true;
 				} else {
-					logger.debug("Did not collapse clusters with distance "+getEucledianDistance(_base.getCentroid(),_compare.getCentroid()));
+					logger.debug("Did not collapse clusters with distance "+getDistanceAlgorithm().getDistance(_base.getCentroid(),_compare.getCentroid()));
 				}
 			}
 		}
@@ -45,7 +44,7 @@ public class CollapsableSimpleFuzzyKMeansClusteringAlgorithm extends SimpleFuzzy
 		Collection<PreparedResult> _clusters = new HashSet<PreparedResult>();
 		_clusters.add(_item1);
 		_clusters.add(_item2);
-		for(String _attribute: SimpleFuzzyKMeansClusteringAlgorithm.getAllWords(_clusters)) {
+		for(String _attribute: PreparationHelper.getSharedWords(_clusters)) {
 			_centroid.put(_attribute, (_item1.getFrequency(_attribute)+_item2.getFrequency(_attribute))/2.0);
 		}
 		return new CentroidPreparedResult(_centroid);

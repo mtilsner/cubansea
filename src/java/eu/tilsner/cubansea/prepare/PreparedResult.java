@@ -1,9 +1,9 @@
 package eu.tilsner.cubansea.prepare;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import eu.tilsner.cubansea.search.SearchResult;
 
@@ -47,7 +47,7 @@ public interface PreparedResult {
 	 * 
 	 * @return The set of all words.
 	 */
-	public Set<String> getWords();
+	public Collection<String> getWords();
 	
 	/**
 	 * Returns the frequency on how often a specific word is used inside

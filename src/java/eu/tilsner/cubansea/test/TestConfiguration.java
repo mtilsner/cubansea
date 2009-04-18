@@ -7,8 +7,10 @@ import java.util.List;
 import eu.tilsner.cubansea.api.Configuration;
 import eu.tilsner.cubansea.cluster.ClusteringAlgorithm;
 import eu.tilsner.cubansea.cluster.simplefuzzykmeans.SimpleFuzzyKMeansClusteringAlgorithm;
+import eu.tilsner.cubansea.distance.DistanceAlgorithm;
+import eu.tilsner.cubansea.distance.euclid.EuclidDistanceAlgorithm;
 import eu.tilsner.cubansea.prepare.PreparationAlgorithm;
-import eu.tilsner.cubansea.prepare.pottersummary.PotterSummaryPreparationAlgorithm;
+import eu.tilsner.cubansea.prepare.pottersummary.AbsolutePotterSummaryPreparationAlgorithm;
 import eu.tilsner.cubansea.search.SearchEngine;
 import eu.tilsner.cubansea.search.yahoo.YahooSearchEngine;
 import eu.tilsner.cubansea.topic.TopicGeneratorAlgorithm;
@@ -46,7 +48,7 @@ public class TestConfiguration implements Configuration {
 	 */
 	@Override
 	public ClusteringAlgorithm getClusteringAlgorithm() {
-		return new SimpleFuzzyKMeansClusteringAlgorithm(1.0);
+		return new SimpleFuzzyKMeansClusteringAlgorithm();
 	}
 
 	/* (non-Javadoc)
@@ -70,7 +72,7 @@ public class TestConfiguration implements Configuration {
 	 */
 	@Override
 	public PreparationAlgorithm getPreparationAlgorithm() {
-		return new PotterSummaryPreparationAlgorithm();
+		return new AbsolutePotterSummaryPreparationAlgorithm();
 	}
 
 	/* (non-Javadoc)
@@ -89,5 +91,52 @@ public class TestConfiguration implements Configuration {
 		return new WordFrequencyTopicGeneratorAlgorithm(3);
 	}
 
+	/* (non-Javadoc)
+	 * @see eu.tilsner.cubansea.api.Configuration#getDistanceAlgorithm()
+	 */
+	@Override
+	public DistanceAlgorithm getDistanceAlgorithm() {
+		return new EuclidDistanceAlgorithm();
+	}
 
+	/* (non-Javadoc)
+	 * @see eu.tilsner.cubansea.api.Configuration#getSensitivity()
+	 */
+	@Override
+	public double getSensitivity() {
+		return 1.0;
+	}
+
+	/* (non-Javadoc)
+	 * @see eu.tilsner.cubansea.api.Configuration#getResultSummaryWeight()
+	 */
+	@Override
+	public int getResultSummaryWeight() {
+		return 1;
+	}
+
+	/* (non-Javadoc)
+	 * @see eu.tilsner.cubansea.api.Configuration#getResultTitleWeight()
+	 */
+	@Override
+	public int getResultTitleWeight() {
+		return 0;
+	}
+
+	/* (non-Javadoc)
+	 * @see eu.tilsner.cubansea.api.Configuration#getResultUrlWeight()
+	 */
+	@Override
+	public int getResultUrlWeight() {
+		return 0;
+	}
+
+	/* (non-Javadoc)
+	 * @see eu.tilsner.cubansea.cluster.ClusteringConfiguration#getMinimalClusterDistance()
+	 */
+	@Override
+	public double getMinimalClusterDistance() {
+		return 0.001;
+	}
+	
 }

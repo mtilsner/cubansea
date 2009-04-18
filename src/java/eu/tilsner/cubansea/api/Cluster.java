@@ -20,7 +20,7 @@ import eu.tilsner.cubansea.cluster.ClusteredResult;
  * @author Matthias Tilsner
  */
 public class Cluster {
-	
+
 	private eu.tilsner.cubansea.cluster.Cluster cluster;
 	private String			id;
 	private Color 			color;

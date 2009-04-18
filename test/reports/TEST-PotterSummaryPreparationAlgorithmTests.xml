@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="1" hostname="mtilsner-laptop" name="PotterSummaryPreparationAlgorithmTests" tests="1" time="0.421" timestamp="2009-04-06T21:22:59">
+<testsuite errors="0" failures="1" hostname="mtilsner-laptop" name="PotterSummaryPreparationAlgorithmTests" tests="1" time="0.249" timestamp="2009-04-18T15:06:42">
   <properties />
-  <testcase classname="PotterSummaryPreparationAlgorithmTests" name="testSomething" time="0.421">
+  <testcase classname="PotterSummaryPreparationAlgorithmTests" name="testSomething" time="0.249">
     <failure message="expected:&lt;{banana=2.0, beauti=1.0, costa=1.0, republ=1.0, rica=1.0, island=1.0}&gt; but was:&lt;{banana=2.0, beauti=1.0, costa=1.0, republ=1.0, rica=1.0, island=1.0}&gt;" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: expected:&lt;{banana=2.0, beauti=1.0, costa=1.0, republ=1.0, rica=1.0, island=1.0}&gt; but was:&lt;{banana=2.0, beauti=1.0, costa=1.0, republ=1.0, rica=1.0, island=1.0}&gt;
 	at PotterSummaryPreparationAlgorithmTests$_testSomething_closure8.doCall(PotterSummaryPreparationAlgorithmTests.groovy:50)
 	at PotterSummaryPreparationAlgorithmTests.testSomething(PotterSummaryPreparationAlgorithmTests.groovy:49)

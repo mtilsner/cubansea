@@ -20,4 +20,12 @@ public interface PreparationAlgorithm {
 	 * @return The prepared result items.
 	 */
 	public List<PreparedResult> prepareResults(List<SearchResult> items);
+	
+	/**
+	 * Sets the configuration to be used by the preparation
+	 * algorithm.
+	 * 
+	 * @param configuration Instance of the configuration.
+	 */
+	public void setConfiguration(PreparationConfiguration configuration);
 }

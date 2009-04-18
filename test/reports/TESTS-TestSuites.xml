@@ -1,9 +1,50 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-  <testsuite errors="0" failures="0" hostname="mtilsner-laptop" id="0" name="ConfigurationTests" package="" tests="1" time="0.227" timestamp="2009-04-06T21:22:57">
+  <testsuite errors="0" failures="1" hostname="mtilsner-laptop" id="0" name="AngleDistanceAlgorithmTests" package="" tests="3" time="1.247" timestamp="2009-04-18T15:06:38">
       <properties />
 
-      <testcase classname="ConfigurationTests" name="testSomething" time="0.226" />
+      <testcase classname="AngleDistanceAlgorithmTests" name="testNullAngle" time="0.85">
+          <failure message="expected:&lt;0.0&gt; but was:&lt;2.1073424255447017E-8&gt;" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: expected:&lt;0.0&gt; but was:&lt;2.1073424255447017E-8&gt;
+	at AngleDistanceAlgorithmTests.testNullAngle(AngleDistanceAlgorithmTests.groovy:28)
+	at _GrailsTest_groovy$_run_closure4.doCall(_GrailsTest_groovy:202)
+	at _GrailsTest_groovy$_run_closure2.doCall(_GrailsTest_groovy:146)
+	at _GrailsTest_groovy$_run_closure1_closure19.doCall(_GrailsTest_groovy:112)
+	at _GrailsTest_groovy$_run_closure1.doCall(_GrailsTest_groovy:95)
+	at TestApp$_run_closure1.doCall(TestApp.groovy:66)
+	at gant.Gant$_dispatch_closure4.doCall(Gant.groovy:324)
+	at gant.Gant$_dispatch_closure6.doCall(Gant.groovy:334)
+	at gant.Gant$_dispatch_closure6.doCall(Gant.groovy)
+	at gant.Gant.withBuildListeners(Gant.groovy:344)
+	at gant.Gant.this$2$withBuildListeners(Gant.groovy)
+	at gant.Gant$this$2$withBuildListeners.callCurrent(Unknown Source)
+	at gant.Gant.dispatch(Gant.groovy:334)
+	at gant.Gant.this$2$dispatch(Gant.groovy)
+	at gant.Gant.invokeMethod(Gant.groovy)
+	at gant.Gant.processTargets(Gant.groovy:495)
+	at gant.Gant.processTargets(Gant.groovy:480)
+</failure>
+
+      </testcase>
+
+      <testcase classname="AngleDistanceAlgorithmTests" name="testRightAngle" time="0.228" />
+
+      <testcase classname="AngleDistanceAlgorithmTests" name="testEqualAngles" time="0.169" />
+
+      <system-out><![CDATA[--Output from testNullAngle--
+--Output from testRightAngle--
+--Output from testEqualAngles--
+]]></system-out>
+
+      <system-err><![CDATA[--Output from testNullAngle--
+--Output from testRightAngle--
+--Output from testEqualAngles--
+]]></system-err>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" hostname="mtilsner-laptop" id="1" name="ConfigurationControllerTests" package="" tests="1" time="1.663" timestamp="2009-04-18T15:06:39">
+      <properties />
+
+      <testcase classname="ConfigurationControllerTests" name="testSomething" time="1.646" />
 
       <system-out><![CDATA[--Output from testSomething--
 ]]></system-out>
@@ -12,10 +53,22 @@
 ]]></system-err>
 
   </testsuite>
-  <testsuite errors="0" failures="0" hostname="mtilsner-laptop" id="1" name="CubanSeaTagLibTests" package="" tests="1" time="0.663" timestamp="2009-04-06T21:22:57">
+  <testsuite errors="0" failures="0" hostname="mtilsner-laptop" id="2" name="ConfigurationTests" package="" tests="1" time="0.0090" timestamp="2009-04-18T15:06:41">
       <properties />
 
-      <testcase classname="CubanSeaTagLibTests" name="testTermHighlighter" time="0.662" />
+      <testcase classname="ConfigurationTests" name="testSomething" time="0.0090" />
+
+      <system-out><![CDATA[--Output from testSomething--
+]]></system-out>
+
+      <system-err><![CDATA[--Output from testSomething--
+]]></system-err>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" hostname="mtilsner-laptop" id="3" name="CubanSeaTagLibTests" package="" tests="1" time="0.528" timestamp="2009-04-18T15:06:41">
+      <properties />
+
+      <testcase classname="CubanSeaTagLibTests" name="testTermHighlighter" time="0.528" />
 
       <system-out><![CDATA[--Output from testTermHighlighter--
 ]]></system-out>
@@ -24,12 +77,12 @@
 ]]></system-err>
 
   </testsuite>
-  <testsuite errors="0" failures="0" hostname="mtilsner-laptop" id="2" name="HTMLHelperTests" package="" tests="2" time="0.916" timestamp="2009-04-06T21:22:58">
+  <testsuite errors="0" failures="0" hostname="mtilsner-laptop" id="4" name="HTMLHelperTests" package="" tests="2" time="0.743" timestamp="2009-04-18T15:06:41">
       <properties />
 
-      <testcase classname="HTMLHelperTests" name="testDocumentFetch" time="0.892" />
+      <testcase classname="HTMLHelperTests" name="testDocumentFetch" time="0.714" />
 
-      <testcase classname="HTMLHelperTests" name="testLinkExtract" time="0.024" />
+      <testcase classname="HTMLHelperTests" name="testLinkExtract" time="0.027" />
 
       <system-out><![CDATA[--Output from testDocumentFetch--
 --Output from testLinkExtract--
@@ -40,10 +93,10 @@
 ]]></system-err>
 
   </testsuite>
-  <testsuite errors="0" failures="1" hostname="mtilsner-laptop" id="3" name="PotterSummaryPreparationAlgorithmTests" package="" tests="1" time="0.421" timestamp="2009-04-06T21:22:59">
+  <testsuite errors="0" failures="1" hostname="mtilsner-laptop" id="5" name="PotterSummaryPreparationAlgorithmTests" package="" tests="1" time="0.249" timestamp="2009-04-18T15:06:42">
       <properties />
 
-      <testcase classname="PotterSummaryPreparationAlgorithmTests" name="testSomething" time="0.421">
+      <testcase classname="PotterSummaryPreparationAlgorithmTests" name="testSomething" time="0.249">
           <failure message="expected:&lt;{banana=2.0, beauti=1.0, costa=1.0, republ=1.0, rica=1.0, island=1.0}&gt; but was:&lt;{banana=2.0, beauti=1.0, costa=1.0, republ=1.0, rica=1.0, island=1.0}&gt;" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: expected:&lt;{banana=2.0, beauti=1.0, costa=1.0, republ=1.0, rica=1.0, island=1.0}&gt; but was:&lt;{banana=2.0, beauti=1.0, costa=1.0, republ=1.0, rica=1.0, island=1.0}&gt;
 	at PotterSummaryPreparationAlgorithmTests$_testSomething_closure8.doCall(PotterSummaryPreparationAlgorithmTests.groovy:50)
 	at PotterSummaryPreparationAlgorithmTests.testSomething(PotterSummaryPreparationAlgorithmTests.groovy:49)
@@ -74,10 +127,10 @@
 ]]></system-err>
 
   </testsuite>
-  <testsuite errors="0" failures="0" hostname="mtilsner-laptop" id="4" name="SearchControllerTests" package="" tests="1" time="0.444" timestamp="2009-04-06T21:22:59">
+  <testsuite errors="0" failures="0" hostname="mtilsner-laptop" id="6" name="SearchControllerTests" package="" tests="1" time="0.057" timestamp="2009-04-18T15:06:42">
       <properties />
 
-      <testcase classname="SearchControllerTests" name="testSomething" time="0.442" />
+      <testcase classname="SearchControllerTests" name="testSomething" time="0.057" />
 
       <system-out><![CDATA[--Output from testSomething--
 ]]></system-out>
@@ -86,10 +139,10 @@
 ]]></system-err>
 
   </testsuite>
-  <testsuite errors="0" failures="0" hostname="mtilsner-laptop" id="5" name="SearchServiceTests" package="" tests="1" time="0.0090" timestamp="2009-04-06T21:23:00">
+  <testsuite errors="0" failures="0" hostname="mtilsner-laptop" id="7" name="SearchServiceTests" package="" tests="1" time="0.014" timestamp="2009-04-18T15:06:43">
       <properties />
 
-      <testcase classname="SearchServiceTests" name="testSomething" time="0.0080" />
+      <testcase classname="SearchServiceTests" name="testSomething" time="0.014" />
 
       <system-out><![CDATA[--Output from testSomething--
 ]]></system-out>
@@ -98,10 +151,10 @@
 ]]></system-err>
 
   </testsuite>
-  <testsuite errors="0" failures="0" hostname="mtilsner-laptop" id="6" name="TopicColorTests" package="" tests="1" time="0.038" timestamp="2009-04-06T21:23:00">
+  <testsuite errors="0" failures="0" hostname="mtilsner-laptop" id="8" name="TopicColorTests" package="" tests="1" time="0.0070" timestamp="2009-04-18T15:06:43">
       <properties />
 
-      <testcase classname="TopicColorTests" name="testSomething" time="0.038" />
+      <testcase classname="TopicColorTests" name="testSomething" time="0.0070" />
 
       <system-out><![CDATA[--Output from testSomething--
 ]]></system-out>

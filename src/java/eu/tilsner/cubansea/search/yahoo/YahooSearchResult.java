@@ -17,7 +17,7 @@ import eu.tilsner.cubansea.utilities.TechnicalError;
  *
  * @author Matthias Tilsner
  */
-public class YahooSearchResult implements SearchResult {
+class YahooSearchResult implements SearchResult {
 
 	private WebSearchResult result;
 	private String content;

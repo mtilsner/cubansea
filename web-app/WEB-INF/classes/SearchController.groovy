@@ -5,6 +5,7 @@ import eu.tilsner.cubansea.utilities.TechnicalError
 
 class SearchController {
 
+	final static String DEFAULT_CONFIGURATION_NAME = "DEFAULT"	
 	SearchService searchService
 	
 	def next = {
@@ -44,9 +45,10 @@ class SearchController {
     	if(params.q){
     		if(!session["search"][params.q]) {
     			try {
+					def config = (params.config && Configuration.findByName(params.config)) ? Configuration.findByName(params.config) : Configuration.findByName(DEFAULT_CONFIGURATION_NAME)
     				session["search"][params.q] = [:]
     				session["search"][params.q]["terms"]  = searchService.terms(params.q)
-    				session["search"][params.q]["search"] = searchService.search(session["search"][params.q]["terms"])
+    				session["search"][params.q]["search"] = searchService.search(session["search"][params.q]["terms"],config)
     				session["search"][params.q]["lock"]	  = new Semaphore(1)
     			} catch(Throwable e) {
     				session["search"][params.q] = null

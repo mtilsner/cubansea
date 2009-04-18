@@ -5,11 +5,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import eu.tilsner.cubansea.cluster.Cluster;
 import eu.tilsner.cubansea.cluster.ClusteredResult;
 import eu.tilsner.cubansea.cluster.ClusteringAlgorithm;
+import eu.tilsner.cubansea.cluster.ClusteringConfiguration;
+import eu.tilsner.cubansea.distance.DistanceAlgorithm;
+import eu.tilsner.cubansea.prepare.PreparationHelper;
 import eu.tilsner.cubansea.prepare.PreparedResult;
 
 import org.apache.log4j.Logger;
@@ -34,7 +36,9 @@ public class SimpleFuzzyKMeansClusteringAlgorithm implements ClusteringAlgorithm
 	private Map<Integer,PreparedResult>				centroids;
 	private Collection<String>						attributes;
 	private int										iterations;
-	private double 									sensitivity;
+
+	private ClusteringConfiguration					configuration;
+	private DistanceAlgorithm						distanceAlgorithm;
 	
 	/* (non-Javadoc)
 	 * @see eu.tilsner.cubansea.cluster.ClusteringAlgorithm#createClusters(java.util.List, int)
@@ -87,7 +91,7 @@ public class SimpleFuzzyKMeansClusteringAlgorithm implements ClusteringAlgorithm
 		for(int i=0;i<numberOfClusters;i++) {
 			centroids.put(i,items.get(i));
 		}
-		attributes = getAllWords(items);
+		attributes = PreparationHelper.getSharedWords(items);
 		updateMemberships();
 	}
 	
@@ -100,7 +104,7 @@ public class SimpleFuzzyKMeansClusteringAlgorithm implements ClusteringAlgorithm
 	 * @return
 	 */
 	private boolean satisfied() {
-		return iterations > MAXIMUM_ITERATIONS || (oldMemberships != null && getEucledianDistance(memberships,oldMemberships) < MINUMUM_ITERATION_PROGRESS);
+		return iterations > MAXIMUM_ITERATIONS || (oldMemberships != null && calculateChange(memberships,oldMemberships) < MINUMUM_ITERATION_PROGRESS);
 	}
 	
 	/**
@@ -117,7 +121,7 @@ public class SimpleFuzzyKMeansClusteringAlgorithm implements ClusteringAlgorithm
 		updateCentroids();
 		updateMemberships();
 		iterations++;
-		logger.debug("performed iteration "+iterations+": change so far was "+getEucledianDistance(memberships,oldMemberships));
+		logger.debug("performed iteration "+iterations+": change so far was "+calculateChange(memberships,oldMemberships));
 	}
 	
 	/**
@@ -144,8 +148,7 @@ public class SimpleFuzzyKMeansClusteringAlgorithm implements ClusteringAlgorithm
 	private Map<PreparedResult,Double> calculateMemberships(Collection<PreparedResult> centroids, PreparedResult item) {
 		Map<PreparedResult,Double> _distances = new HashMap<PreparedResult,Double>();
 		for(PreparedResult _cluster: centroids) {
-			_distances.put(_cluster, Math.max(getEucledianDistance(_cluster, item),0.0000000001));
-			//_distances.put(_cluster, getEucledianDistance(_cluster, item));
+			_distances.put(_cluster, Math.max(distanceAlgorithm.getDistance(_cluster, item),0.0000000001));
 		}
 
 		Map<PreparedResult,Double> _memberships = new HashMap<PreparedResult,Double>();
@@ -190,14 +193,13 @@ public class SimpleFuzzyKMeansClusteringAlgorithm implements ClusteringAlgorithm
 	}
 	
 	/**
-	 * Calculates the eucledian distance between two membership maps.
-	 * It uses the sum of all cluster memberships for calculation.
+	 * Calculates the change occuring between two membership maps.
 	 * 
 	 * @param items1 First item for comparison.
 	 * @param items2 Second item for comparison.
-	 * @return Eucledian distance between the two items.
+	 * @return The occured change the two items.
 	 */
-	private double getEucledianDistance(Map<PreparedResult,Map<Integer,Double>> items1, Map<PreparedResult,Map<Integer,Double>> items2) {
+	private double calculateChange(Map<PreparedResult,Map<Integer,Double>> items1, Map<PreparedResult,Map<Integer,Double>> items2) {
 		double _distance = 0.0;
 		for(PreparedResult _item: memberships.keySet()) {
 			Map<Integer,Double> _item1 = items1.get(_item);
@@ -211,42 +213,6 @@ public class SimpleFuzzyKMeansClusteringAlgorithm implements ClusteringAlgorithm
 		return Math.sqrt(_distance);
 	}
 	
-	/**
-	 * Calculates the distance between two prepared result items. The
-	 * word frequencies are used as numeric attributes.
-	 * 
-	 * @param item1 First item for comparison.
-	 * @param item2 Second item for comparison.
-	 * @return Eucledian distance between the two items.
-	 */
-	protected double getEucledianDistance(PreparedResult item1, PreparedResult item2) {
-		double distance = 0.0;
-		Set<PreparedResult> items = new HashSet<PreparedResult>();
-		items.add(item1);
-		items.add(item2);
-		Collection<String> attributes = getAllWords(items);
-		for(String _attribute: attributes) {
-			distance += Math.pow(item1.getFrequency(_attribute) - item2.getFrequency(_attribute), 2);
-		}
-		return Math.sqrt(distance);
-	}
-	
-	/**
-	 * Extracts the union of all words provided by the result item list.
-	 * 
-	 * @param items Items from which the words shall be taken.
-	 * @return Union of all occurring word sets.
-	 */
-	protected static Collection<String> getAllWords(Collection<PreparedResult> items) {
-		Collection<String> _words = new HashSet<String>();
-		for(PreparedResult _item: items) {
-			for(String _word: _item.getWords()) {
-				if(!_words.contains(_word)) _words.add(_word);
-			}
-		}
-		return _words;
-	}
-
 	/**
 	 * Adds a given item to a set of clusters based on the provided membership values.
 	 */
@@ -288,7 +254,7 @@ public class SimpleFuzzyKMeansClusteringAlgorithm implements ClusteringAlgorithm
 	 * @return The sensability.
 	 */
 	private double getSensability(Collection<Cluster> clusters) {
-		return (1.0 / clusters.size())*sensitivity;
+		return (1.0 / clusters.size())*configuration.getSensitivity();
 	}
 	
 	/* (non-Javadoc)
@@ -298,32 +264,36 @@ public class SimpleFuzzyKMeansClusteringAlgorithm implements ClusteringAlgorithm
 	public ClusteredResult createClusteredResult(Collection<Cluster> clusters, PreparedResult item) {
 		Map<Cluster,Double> _relevances = new HashMap<Cluster,Double>();
 		for(Cluster _cluster: clusters) {
-			_relevances.put(_cluster, getEucledianDistance(_cluster.getCentroid(),item));
+			_relevances.put(_cluster, distanceAlgorithm.getDistance(_cluster.getCentroid(),item));
 		}
 		return new SimpleFuzzyKMeansClusteredResult(item, _relevances);
 	}
 
-	/**
-	 * Default constructor initializing the sensitivity with 1.
+	/* (non-Javadoc)
+	 * @see eu.tilsner.cubansea.cluster.ClusteringAlgorithm#setConfiguration(eu.tilsner.cubansea.cluster.ClusteringConfiguration)
 	 */
-	public SimpleFuzzyKMeansClusteringAlgorithm() {
-		this(1.0);
+	@Override
+	public void setConfiguration(ClusteringConfiguration configuration) {
+		this.configuration = configuration;
+		this.distanceAlgorithm = configuration.getDistanceAlgorithm();
 	}
 
 	/**
-	 * Constructor allow an individual specification of the sensitivity.
+	 * Getter for the configuration used by this algorithm
 	 * 
-	 * @param _sensitivity The sensitivity to use.
+	 * @return The configuration used.
 	 */
-	public SimpleFuzzyKMeansClusteringAlgorithm(double _sensitivity) {
-		sensitivity = _sensitivity;		
+	public ClusteringConfiguration getConfiguration() {
+		return configuration;
+	}
+
+	/**
+	 * Getter for the distance algorithm used by this algorithm
+	 * 
+	 * @return The distance algorithm used.
+	 */
+	public DistanceAlgorithm getDistanceAlgorithm() {
+		return distanceAlgorithm;
 	}
 	
-	public Map<PreparedResult,Map<Integer,Double>> getMemberships() {
-		return memberships;
-	}
-	
-	public Map<Integer,PreparedResult> getCentroids() {
-		return centroids;
-	}
 }

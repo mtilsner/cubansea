@@ -1,5 +1,5 @@
 Testsuite: PotterSummaryPreparationAlgorithmTests
-Tests run: 1, Failures: 1, Errors: 0, Time elapsed: 0,421 sec
+Tests run: 1, Failures: 1, Errors: 0, Time elapsed: 0,249 sec
 ------------- Standard Output ---------------
 --Output from testSomething--
 ------------- ---------------- ---------------
@@ -7,7 +7,7 @@ Tests run: 1, Failures: 1, Errors: 0, Time elapsed: 0,421 sec
 --Output from testSomething--
 ------------- ---------------- ---------------
 
-Testcase: testSomething took 0,42 sec
+Testcase: testSomething took 0,249 sec
 	FAILED
 expected:<{banana=2.0, beauti=1.0, costa=1.0, republ=1.0, rica=1.0, island=1.0}> but was:<{banana=2.0, beauti=1.0, costa=1.0, republ=1.0, rica=1.0, island=1.0}>
 junit.framework.AssertionFailedError: expected:<{banana=2.0, beauti=1.0, costa=1.0, republ=1.0, rica=1.0, island=1.0}> but was:<{banana=2.0, beauti=1.0, costa=1.0, republ=1.0, rica=1.0, island=1.0}>

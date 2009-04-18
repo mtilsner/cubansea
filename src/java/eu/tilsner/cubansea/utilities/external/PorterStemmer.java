@@ -44,8 +44,8 @@ import java.io.*;
   * by calling one of the various stem(something) methods.
   */
 
-public class PorterStemmer
-{  private char[] b;
+public class PorterStemmer{
+   private char[] b;
    private int i,     /* offset into b */
                i_end, /* offset to end of stemmed word */
                j, k;

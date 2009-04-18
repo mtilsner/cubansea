@@ -1,7 +1,7 @@
 package eu.tilsner.cubansea.prepare.pottersummary;
 
+import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 
 import eu.tilsner.cubansea.prepare.PreparedResult;
 import eu.tilsner.cubansea.search.SearchResult;
@@ -45,7 +45,7 @@ public class PotterSummaryPreparedResult implements PreparedResult {
 	 * @see eu.tilsner.cubansea.prepare.PreparedResult#getWords()
 	 */
 	@Override
-	public Set<String> getWords() {
+	public Collection<String> getWords() {
 		return wordFrequencies.keySet();
 	}
 

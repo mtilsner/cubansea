@@ -1,15 +1,10 @@
-class TopicColor implements Comparable {
+class TopicColor {
 
 	String color
-	int position
 	
     static constraints = {
-		color(validator: {
-			return cluster ==~ /[0-9a-fA-F]{8}/
+		color(validator: {val,obj ->
+			return val ==~ /[0-9a-fA-F]{6}/
 		})
     }
-	
-	int compareTo(obj) {
-		obj.position - position
-	}
 }

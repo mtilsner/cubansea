@@ -3,8 +3,6 @@ import eu.tilsner.cubansea.utilities.StringHelper
 
 class SearchService {
 
-	final static String DEFAULT_CONFIGURATION_NAME = "DEFAULT"
-	
     boolean transactional = true
     
     def cluster(search, clusterid) {
@@ -17,8 +15,7 @@ class SearchService {
 		return search.fetchNextBlock()
 	}
     
-    def search(terms) {
-    	def config = Configuration.findByName(DEFAULT_CONFIGURATION_NAME)
+    def search(terms, config) {
     	def search = new Search(terms, config)
     	return search
     }

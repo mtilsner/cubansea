@@ -18,10 +18,8 @@ public class YahooSearchEngine implements SearchEngine {
      * @see eu.tilsner.cubansea.search.SearchEngine#createSearch(java.util.List, int)
      */
 	@Override
-    public Search createSearch(List<String> searchTerms, int initialLoadCount) throws SearchEngineException {
-        YahooSearch search = new YahooSearch(searchTerms);
-        search.ensureResultsAreFetched(initialLoadCount);
-        return search;
+    public Search createSearch(List<String> searchTerms) throws SearchEngineException {
+        return new YahooSearch(searchTerms);
     }
 
 }

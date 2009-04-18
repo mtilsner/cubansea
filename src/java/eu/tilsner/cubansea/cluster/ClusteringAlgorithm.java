@@ -33,7 +33,7 @@ public interface ClusteringAlgorithm {
 	public ClusteredResult createClusteredResult(Collection<Cluster> clusters, PreparedResult item);
 	
 	/**
-	 * Determins which clusters are relevant for a specific item. The item
+	 * Determines which clusters are relevant for a specific item. The item
 	 * will then be added to those.
 	 * 
 	 * @param clusters The clusters to be considered.
@@ -41,4 +41,11 @@ public interface ClusteringAlgorithm {
 	 * @return The clusters relevant for the item.
 	 */
 	public Collection<Cluster> determineRelevantClusters(Collection<Cluster> clusters, ClusteredResult item);
+	
+	/**
+	 * Sets the configuration that is to be used by this clustering algorithm. 
+	 * 
+	 * @param configuration The configuration instance.
+	 */
+	public void setConfiguration(ClusteringConfiguration configuration);
 }

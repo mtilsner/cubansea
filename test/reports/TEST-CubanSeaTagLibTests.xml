@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite errors="0" failures="0" hostname="mtilsner-laptop" name="CubanSeaTagLibTests" tests="1" time="0.663" timestamp="2009-04-06T21:22:57">
+<testsuite errors="0" failures="0" hostname="mtilsner-laptop" name="CubanSeaTagLibTests" tests="1" time="0.528" timestamp="2009-04-18T15:06:41">
   <properties />
-  <testcase classname="CubanSeaTagLibTests" name="testTermHighlighter" time="0.662" />
+  <testcase classname="CubanSeaTagLibTests" name="testTermHighlighter" time="0.528" />
   <system-out><![CDATA[--Output from testTermHighlighter--
 ]]></system-out>
   <system-err><![CDATA[--Output from testTermHighlighter--

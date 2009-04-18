@@ -10,7 +10,7 @@ import eu.tilsner.cubansea.cluster.Cluster;
  * @author Matthias Tilsner
  */
 public interface TopicGeneratorAlgorithm {
-	
+
 	/**
 	 * Generates the topic for a cluster
 	 * 

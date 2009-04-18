@@ -6,6 +6,7 @@ package eu.tilsner.cubansea.api;
  * @author Matthias Tilsner
  */
 public class NoMoreResultsException extends Exception {
+
 	private static final long serialVersionUID = 5529809352698173218L;
 
 	public NoMoreResultsException(String message) {

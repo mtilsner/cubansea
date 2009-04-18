@@ -1,5 +1,5 @@
 Testsuite: HTMLHelperTests
-Tests run: 2, Failures: 0, Errors: 0, Time elapsed: 0,916 sec
+Tests run: 2, Failures: 0, Errors: 0, Time elapsed: 0,743 sec
 ------------- Standard Output ---------------
 --Output from testDocumentFetch--
 --Output from testLinkExtract--
@@ -9,5 +9,5 @@ Tests run: 2, Failures: 0, Errors: 0, Time elapsed: 0,916 sec
 --Output from testLinkExtract--
 ------------- ---------------- ---------------
 
-Testcase: testDocumentFetch took 0,892 sec
-Testcase: testLinkExtract took 0,024 sec
+Testcase: testDocumentFetch took 0,714 sec
+Testcase: testLinkExtract took 0,027 sec
