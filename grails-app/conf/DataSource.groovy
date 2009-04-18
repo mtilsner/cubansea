@@ -20,7 +20,7 @@ environments {
 	test {
 		dataSource {
 			dbCreate = "update"
-			url = "jdbc:mysql://www.tilsner.eu:3306/cubansea_development?autoReconnect=true"
+			url = "jdbc:mysql://www.tilsner.eu:3306/cubansea_test?autoReconnect=true"
 			username = "cubansea-admin"
 			password = "infoViz"
 		}
@@ -28,7 +28,7 @@ environments {
 	production {
 		dataSource {
 			dbCreate = "update"
-			url = "jdbc:mysql://www.tilsner.eu:3306/cubansea_development?autoReconnect=true"
+			url = "jdbc:mysql://www.tilsner.eu:3306/cubansea_production?autoReconnect=true"
 			username = "cubansea-admin"
 			password = "infoViz"
 		}
