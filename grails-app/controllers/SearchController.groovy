@@ -19,7 +19,7 @@ class SearchController {
 							resultIndex++
 							output(overview:g.render(template:"overviewElement",model:[result:result,cluster:key]),
 								   details:g.render(template:"element",model:[result:result,cluster:key, terms:session["current"]["terms"]], 
-										                                      collapsed:(session["current"]["config"].initiallyExpandedResults!=-1 && resultIndex>session["current"]["config"].initiallyExpandedResults)))
+										                                      collapsed:(session["config"].initiallyExpandedResults!=-1 && resultIndex>session["config"].initiallyExpandedResults)))
 						}
 					}
 				}
@@ -36,22 +36,23 @@ class SearchController {
 		session["current"]["lock"].acquire()
 		def cluster = searchService.cluster(session["current"]["search"],params.cluster)
 		render(template: "cluster", model: [cluster:cluster, terms:session["current"]["terms"], 
-		                                    initiallyExpandedResults:session["current"]["config"].initiallyExpandedResults,
-		                                    autoFetching: session["current"]["config"].autoFetching])
+		                                    initiallyExpandedResults:session["config"].initiallyExpandedResults,
+		                                    autoFetching: session["config"].autoFetching])
 		session["current"]["lock"].release()
 	}
 	
     def index = {
+		if(!session["config"] || params?.config) {
+			session["config"] = (params.config && Configuration.findByName(params.config)) ? Configuration.findByName(params.config) : Configuration.findByName(DEFAULT_CONFIGURATION_NAME)
+		}
 		if(!session["search"]) session["search"] = [:]
     	if(params.q){
     		if(!session["search"][params.q]) {
     			try {
-					def config = (params.config && Configuration.findByName(params.config)) ? Configuration.findByName(params.config) : Configuration.findByName(DEFAULT_CONFIGURATION_NAME)
     				session["search"][params.q] = [:]
     				session["search"][params.q]["terms"]  = searchService.terms(params.q)
-    				session["search"][params.q]["search"] = searchService.search(session["search"][params.q]["terms"],config)
+    				session["search"][params.q]["search"] = searchService.search(session["search"][params.q]["terms"],session["config"])
     				session["search"][params.q]["lock"]	  = new Semaphore(1)
-					session["search"][params.q]["config"] = config
     			} catch(Throwable e) {
     				session["search"][params.q] = null
     				throw e
@@ -63,7 +64,7 @@ class SearchController {
     		session["current"]["lock"].acquire()
     		render(view: "search", model: [q: params.q, terms: session["current"]["terms"],
     		                               clusters: session["current"]["search"].clusters,
-    		                               autoFetching: session["current"]["config"].autoFetching,
+    		                               autoFetching: session["config"].autoFetching,
     		                               clusterCount: session["current"]["search"].clusters.size(),
     		                               totalResultCount: session["current"]["search"].totalResultCount])
            	session["current"]["lock"].release()
