@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="${createLinkTo(dir:'css',file:'cubanSea.css')}" />
         <link rel="shortcut icon" href="${createLinkTo(dir:'images',file:'favicon.ico')}" type="image/x-icon" />
         <g:javascript library="scriptaculous" />				
+        <g:javascript library="application" />
         <g:layoutHead />
     </head>
     <body>

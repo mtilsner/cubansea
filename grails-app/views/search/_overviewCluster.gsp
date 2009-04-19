@@ -2,7 +2,8 @@
 	<cs:glower classes="['csFull']">
 		<div class="clusterOverview_background" style="background-color:#${cluster.cssColor}">
 			<div class="clusterOverview_topic">
-				${cluster.topic} (${cluster.resultCountGuess})
+				${cluster.topic}<br />
+				<span style="font-size:0.8em;">ca. <g:formatNumber number="${cluster.resultCountGuess}" format="###,###,###,##0" /> results (<g:formatNumber number="${cluster.resultCountProportion*100}" format="##0.0" />%)</span>
 			</div>
 			<cs:glower id="${cluster.id}_results" classes="['clusterOverview_results']">
 				<div class="clusterOverview_results_background"></div>

@@ -29,6 +29,7 @@ import com.yahoo.search.WebSearchResults;
 class YahooSearch implements Search {
 	
 	public static final int REQUEST_SIZE = 50;
+	public static final int MAX_RESULTS = 1000;
 	
 	private String query;
 	private List<SearchResult> results = new ArrayList<SearchResult>();
@@ -91,7 +92,7 @@ class YahooSearch implements Search {
     			results.add(new YahooSearchResult(_result, cacheStatus+1));
     			cacheStatus++;
     		}
-    		if(resultCount == -1) resultCount = _results.getTotalResultsAvailable().intValue();
+    		if(resultCount == -1) resultCount = Math.min(MAX_RESULTS, _results.getTotalResultsAvailable().intValue());
         } catch (IOException e) {
 			throw new TechnicalError(e);
 		} catch (SearchException e) {

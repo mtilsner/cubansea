@@ -6,8 +6,10 @@
 </div>
 <div class="cluster_scroll">
 	<div id="${cluster.id}_resultList" class="cluster_resultList" clusterId="${cluster.id}">
+		<g:set var="resultIndex" value="${0}" />
 		<g:each var="result" in="${cluster.currentResults}">
-			<g:render template="element" model="${['result':result,'cluster':cluster,'terms':terms]}" />
+			<g:set var="resultIndex" value="${resultIndex+1}" />
+			<g:render template="element" model="${[result:result,cluster:cluster,terms:terms,collapsed:(initiallyExpandedResults!=-1 && resultIndex>initiallyExpandedResults)]}" />
 		</g:each>		
 	</div>
 </div>

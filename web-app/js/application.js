@@ -11,3 +11,9 @@ if (Ajax && (Ajax != null)) {
 	  }
 	});
 }
+
+function autoFocus() {
+	$("searchField").focus();
+}
+
+Event.observe(window, "load", autoFocus);

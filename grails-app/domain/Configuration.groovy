@@ -18,7 +18,7 @@ class Configuration implements APIConfiguration {
                          'clusterColors'] 
 	
 	/* unique identifier */
-    String id
+    String name
     
     /* ui configuration */
     boolean autoFetching
@@ -69,12 +69,11 @@ class Configuration implements APIConfiguration {
 	String distanceAlgorithmClassName
 	
 	static mapping = {
-    	id generator: 'assigned'
 		version false
 	}
 	
     static constraints = {
-    	id(blank:false, nullable:false, maxLength:64) 
+		name(blank:false,unique:true)
 		clusteringAlgorithmClassName(validator: {val,obj ->
 			try {
 				def clazz = Class.forName(val, false, classLoader)

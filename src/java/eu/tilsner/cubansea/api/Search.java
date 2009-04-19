@@ -40,7 +40,8 @@ public class Search {
 	 */
 	private void guessResultCounts() {
 		for(Cluster _cluster: clusters.values()) {
-			_cluster.setResultCountGuess((int) Math.round(_cluster.getCurrentResultCount()*1.0/cacheStatus*search.getResultCount()));
+			_cluster.setResultCountProportion(_cluster.getCurrentResultCount()*1.0/cacheStatus);
+			_cluster.setResultCountGuess((int) Math.round(_cluster.getResultCountProportion()*search.getResultCount()));
 		}
 	}
 	

@@ -1,5 +1,5 @@
 import eu.tilsner.cubansea.prepare.PreparedResult
-import eu.tilsner.cubansea.prepare.pottersummary.PotterSummaryPreparationAlgorithm
+import eu.tilsner.cubansea.prepare.pottersummary.AbsolutePotterSummaryPreparationAlgorithm
 import eu.tilsner.cubansea.search.SearchResult
 import eu.tilsner.cubansea.utilities.StemmerHelper
 
@@ -44,7 +44,7 @@ class PotterSummaryPreparationAlgorithmTests extends GrailsUnitTestCase {
     	    (StemmerHelper.stem("taste")):1.0,
     	    (StemmerHelper.stem("golden")):1.0]
     	]
-    	def algorithm = new PotterSummaryPreparationAlgorithm()
+    	def algorithm = new AbsolutePotterSummaryPreparationAlgorithm()
     	def results   = algorithm.prepareResults(pages).collect { it.allFrequencies }
     	expected.eachWithIndex {exp,index ->
     		assertEquals exp, results[index]

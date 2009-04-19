@@ -7,3 +7,5 @@ installed and all environment variables are set. Then run
 and point your browser to http://localhost:8080/CubanSea. Please note that the
 interface currently supports only Firefox 3+. Other browser support will be
 added later.
+A configuration scaffolding interface has been added. It can be accessed over
+  http://localhost:8080/CubanSea/configuration/

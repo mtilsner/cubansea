@@ -28,6 +28,7 @@ public class Cluster {
 	private Search			search;
 	private String			topic;
 	private int				resultCountGuess;
+	private double			resultCountProportion;
 	
 	/**
 	 * Returns a unique string id for this cluster.
@@ -123,6 +124,24 @@ public class Cluster {
 	 */
 	protected void setResultCountGuess(int _resultCountGuess) {
 		resultCountGuess = _resultCountGuess;
+	}
+	
+	/**
+	 * Returns the guessed proportion of results in this cluster.
+	 * 
+	 * @return The guessed result proportion.
+	 */
+	public double getResultCountProportion() {
+		return resultCountProportion;
+	}
+
+	/**
+	 * Set the guessed result proportion.
+	 * 
+	 * @param _resultCountProportion The guess for the result proportion.
+	 */
+	protected void setResultCountProportion(double _resultCountProportion) {
+		resultCountProportion = _resultCountProportion;
 	}
 	
 	/**

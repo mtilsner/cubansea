@@ -25,7 +25,7 @@
                         <tr class="prop">
                             <td valign="top" class="name">Name:</td>
                             
-                            <td valign="top" class="value">${fieldValue(bean:configurationInstance, field:'name')}  (${fieldValue(bean:configurationInstance, field:'id')})</td>
+                            <td valign="top" class="value">${fieldValue(bean:configurationInstance, field:'name')}</td>
                             
                         </tr>
                                         
