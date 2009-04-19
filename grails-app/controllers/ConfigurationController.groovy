@@ -3,7 +3,7 @@
 class ConfigurationController {
     
     def index = {
-    	redirect(url: g.createLink(action:list,params:params,absolute:true))
+    	redirect(url: g.createLink(action:'list',params:params,absolute:true))
     }
 
     // the delete, save and update actions only accept POST requests
@@ -19,7 +19,7 @@ class ConfigurationController {
 
         if(!configurationInstance) {
             flash.message = "Configuration not found with id ${params.id}"
-            redirect(url: g.createLink(action:list,absolute:true))
+            redirect(url: g.createLink(action:'list',absolute:true))
         }
         else { return [ configurationInstance : configurationInstance ] }
     }
@@ -30,16 +30,16 @@ class ConfigurationController {
             try {
                 configurationInstance.delete()
                 flash.message = "Configuration ${params.id} deleted"
-                redirect(url: g.createLink(action:list,absolute:true))
+                redirect(url: g.createLink(action:'list',absolute:true))
             }
             catch(org.springframework.dao.DataIntegrityViolationException e) {
                 flash.message = "Configuration ${params.id} could not be deleted"
-                redirect(url: g.createLink(action:show,id:params.id,absolute:true))
+                redirect(url: g.createLink(action:'show',id:params.id,absolute:true))
             }
         }
         else {
             flash.message = "Configuration not found with id ${params.id}"
-            redirect(url: g.createLink(action:list,absolute:true))
+            redirect(url: g.createLink(action:'list',absolute:true))
         }
     }
 
@@ -48,7 +48,7 @@ class ConfigurationController {
 
         if(!configurationInstance) {
             flash.message = "Configuration not found with id ${params.id}"
-            redirect(url: g.createLink(action:list,absolute:true))
+            redirect(url: g.createLink(action:'list',absolute:true))
         }
         else {
             return [ configurationInstance : configurationInstance ]
@@ -70,7 +70,7 @@ class ConfigurationController {
             configurationInstance.properties = params
             if(!configurationInstance.hasErrors() && configurationInstance.save()) {
                 flash.message = "Configuration ${params.id} updated"
-                redirect(url: g.createLink(action:show,id:configurationInstance.id,absolute:true))
+                redirect(url: g.createLink(action:'show',id:configurationInstance.id,absolute:true))
             }
             else {
                 render(view:'edit',model:[configurationInstance:configurationInstance])
@@ -78,7 +78,7 @@ class ConfigurationController {
         }
         else {
             flash.message = "Configuration not found with id ${params.id}"
-            redirect(url: g.createLink(action:edit,id:params.id,absolute:true))
+            redirect(url: g.createLink(action:'edit',id:params.id,absolute:true))
         }
     }
 
@@ -92,7 +92,7 @@ class ConfigurationController {
         def configurationInstance = new Configuration(params)
         if(!configurationInstance.hasErrors() && configurationInstance.save()) {
             flash.message = "Configuration ${configurationInstance.id} created"
-            redirect(url: g.createLink(action:show,id:configurationInstance.id,absolute:true))
+            redirect(url: g.createLink(action:'show',id:configurationInstance.id,absolute:true))
         }
         else {
             render(view:'create',model:[configurationInstance:configurationInstance])
