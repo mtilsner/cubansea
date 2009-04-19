@@ -25,9 +25,9 @@ class SearchController {
 				}
 			}
 		} catch(NoMoreResultsException ne) {
-			render("status:'done'}")
+			render("done")
 		} catch(TechnicalError te) {
-			render("status:'retry'}")
+			render("retry")
 		}
 		session["current"]["lock"].release()
 	}
@@ -37,7 +37,8 @@ class SearchController {
 		def cluster = searchService.cluster(session["current"]["search"],params.cluster)
 		render(template: "cluster", model: [cluster:cluster, terms:session["current"]["terms"], 
 		                                    initiallyExpandedResults:session["config"].initiallyExpandedResults,
-		                                    autoFetching: session["config"].autoFetching])
+		                                    autoFetching: session["config"].autoFetching,
+		                                    done: session["current"]["search"].isDone()])
 		session["current"]["lock"].release()
 	}
 	

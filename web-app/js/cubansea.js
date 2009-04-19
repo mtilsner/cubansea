@@ -78,17 +78,17 @@ var cubansea = {
 			method: 'get',
 			onComplete: function(response) { 
 				try {
-					var json = response.responseText.evalJSON(true);
-					if(json.status == "done")
+					var result = response.responseText;
+					if(result == "done") {
+						$$(".cluster_handle").invoke("replace","");
 						return;
-					else if(json.status == "retry") {
+					} else if(result == "retry") {
 						cubansea.fetchNext();
 						return;
 					} else
-						cubansea.addResults(json);
+						cubansea.addResults(result.evalJSON(true));
 					cubansea.try = 0;
 				}catch(e) {
-					alert(e);
 					cubansea.try++;
 					if(cubansea.try >= cubansea.configuration.MAX_TRIES) return;
 				}

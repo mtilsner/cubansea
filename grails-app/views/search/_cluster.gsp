@@ -10,17 +10,19 @@
 		<g:each var="result" in="${cluster.currentResults}">
 			<g:set var="resultIndex" value="${resultIndex+1}" />
 			<g:render template="element" model="${[result:result,cluster:cluster,terms:terms,collapsed:(initiallyExpandedResults!=-1 && resultIndex>initiallyExpandedResults)]}" />
-		</g:each>		
-		<div id="${cluster.id}_handle" class="cluster_handle">
-			<g:if test="${autoFetching}">
-				loading more results ...
-			</g:if>
-			<g:else>
-				<a href="${createLink(controller:'search',action:'next')}" onClick="javascript:cubansea.fetchNext();return false;">
-					[load more results]
-				</a>
-			</g:else>
-		</div>
+		</g:each>
+		<g:if test="${!done}">
+			<div id="${cluster.id}_handle" class="cluster_handle">
+				<g:if test="${autoFetching}">
+					loading more results ...
+				</g:if>
+				<g:else>
+					<a href="${createLink(controller:'search',action:'next')}" onClick="javascript:cubansea.fetchNext();return false;">
+						[load more results]
+					</a>
+				</g:else>
+			</div>
+		</g:if>
 	</div>	
 </div>
 <div class="cluster_background" style="background-color:#${cluster.cssColor};"></div>
