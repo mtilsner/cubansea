@@ -1,7 +1,9 @@
 var cubansea = {
 	configuration : {
 		OVERVIEW_CHILDREN : 20,
-		MAX_TRIES :			 5
+		MAX_TRIES :			 5,
+//		EFFECT_DURATION :	0.2,
+		STATIC_LOADING_HANDLE : 'loading more results '
 	},
 	
 	try : 0,
@@ -16,17 +18,18 @@ var cubansea = {
 	},
 	
 	addToCluster : function(clusterid, resultList) {
-		if(!$(clusterid)) return
-		var pane = $(clusterid+"_resultList");
+		if(!$(clusterid+"_resultList")) return
+		var handle = $(clusterid+"_handle");
 		while(resultList.length > 0) {
-			pane.insert({bottom: resultList.shift().details});
+			handle.insert({before: resultList.shift().details});
+//			new Effect.SlideDown(handle.previous(0), {duration:cubansea.configuration.EFFECT_DURATION, queue:'end'});
 		}
 	},
 	
 	addResults : function(resultsObject) {
 		for(var cluster in resultsObject){
 			cubansea.addToOverview(cluster,$A(resultsObject[cluster]));
-			if($(cluster)) cubansea.addToCluster(cluster, $(resultsObject[cluster]));
+			if($(cluster+"_resultList")) cubansea.addToCluster(cluster, $A(resultsObject[cluster]));
 			cubansea.filter(cluster);
 		}
 	},
@@ -70,6 +73,7 @@ var cubansea = {
 	},
 	
 	fetchNext : function() {
+		if(!AUTO_FETCHING) $$(".cluster_handle").each(function(handle) { handle.update(cubansea.configuration.STATIC_LOADING_HANDLE) }); 
 		new Ajax.Request('/CubanSea/next', {
 			method: 'get',
 			onComplete: function(response) { 
@@ -77,14 +81,21 @@ var cubansea = {
 					var json = response.responseText.evalJSON(true);
 					if(json.status == "done")
 						return;
-					else
+					else if(json.status == "retry") {
+						cubansea.fetchNext();
+						return;
+					} else
 						cubansea.addResults(json);
-					cubansea.try = 1;
+					cubansea.try = 0;
 				}catch(e) {
+					alert(e);
 					cubansea.try++;
 					if(cubansea.try >= cubansea.configuration.MAX_TRIES) return;
 				}
-				cubansea.fetchNext();
+				if(AUTO_FETCHING)
+					cubansea.fetchNext();
+				else
+					$$(".cluster_handle").each(function(handle) { handle.update("<a href='/CubanSea/next' onClick='javascript:cubansea.fetchNext();return false;'>[load more results]</a>") });
 			}
 		});
 	},
@@ -94,11 +105,13 @@ var cubansea = {
 	},
 	
 	filter: function(clusterid) {
+		if(!$(clusterid+"_filter")) return;
 		var filter  		= $(clusterid+"_filter").value;
 		var checkSummary	= ($(clusterid+"_filter_summary").value == "on");
 		if(!cubansea.filterValues[clusterid]) cubansea.filterValues[clusterid] = {filter: "", checkSummary: false}
 		if(cubansea.filterValues[clusterid].filter == filter && cubansea.filterValues[clusterid].checkSummary == checkSummary) return;
 		$(clusterid+"_resultList").childElements().each(function(element){
+			if(element.hasClassName("cluster_handle")) return;
 			var title 	= element.readAttribute("resultTitle")
 			var summary = element.readAttribute("resultSummary")
 			var url		= element.readAttribute("resultURL");
@@ -122,8 +135,20 @@ var cubansea = {
 		$(resultid+"_summary").toggle();
 		$(resultid+"_relevanceSquare").toggleClassName("expanded");
 		$(resultid+"_relevanceSquare").toggleClassName("collapsed");
+	},
+	
+	animateLoadingHandle: function() {
+		$$(".cluster_handle").each(function(handle){
+			if(handle.down("a")) return;
+			var current = handle.innerHTML.length - cubansea.configuration.STATIC_LOADING_HANDLE.length;
+			current = (current+1)%4;
+			var replace = cubansea.configuration.STATIC_LOADING_HANDLE;
+			for(i=0;i<current;i++) { replace += "."; }
+			handle.update(replace);
+		});
 	}
 }
-
-Event.observe(window, "load", cubansea.fetchNext);
-new PeriodicalExecuter(cubansea.checkFilter,0.25);
+ 
+if(AUTO_FETCHING) Event.observe(window, "load", cubansea.fetchNext);
+new PeriodicalExecuter(cubansea.checkFilter,0.1);
+new PeriodicalExecuter(cubansea.animateLoadingHandle,0.4);

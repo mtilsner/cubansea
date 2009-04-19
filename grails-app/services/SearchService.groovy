@@ -1,6 +1,9 @@
 import eu.tilsner.cubansea.api.Search
 import eu.tilsner.cubansea.utilities.StringHelper
 
+import eu.tilsner.cubansea.api.NoMoreResultsException
+import eu.tilsner.cubansea.utilities.TechnicalError
+
 class SearchService {
 
     boolean transactional = true
@@ -11,7 +14,7 @@ class SearchService {
 		}
 	}
     
-    def next(search) {
+    def next(search) throws NoMoreResultsException, TechnicalError {
 		return search.fetchNextBlock()
 	}
     

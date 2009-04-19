@@ -1,0 +1,1 @@
+var AUTO_FETCHING = false;

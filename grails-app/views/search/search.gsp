@@ -12,6 +12,12 @@
         <link rel="stylesheet" href="${createLinkTo(dir:'css',file:'progressBar.css')}" />
 		<g:javascript library="prototype/window" />
         <g:javascript library="progressBar" />
+        <g:if test="${autoFetching}">
+	        <g:javascript library="cubansea_autoFetching" />    
+        </g:if>
+        <g:else>
+	        <g:javascript library="cubansea_noAutoFetching" />    
+        </g:else>
         <g:javascript library="cubansea" />
 	</head>
 	<body>
@@ -20,6 +26,7 @@
 				<input type="text" id="searchField" name="q" value="${q}" />
 				<input type="submit" id="searchButton" value="" />
 			</form>
+			<div id="searchResultStatistic">found <g:formatNumber number="${totalResultCount}" format="###,###,###,##0" /> results in <g:formatNumber number="${clusterCount}" format="###,###,###,##0" /> clusters</div>
 		</div>
 		<cs:glower id="content">
 			<br />

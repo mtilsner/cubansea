@@ -133,6 +133,15 @@ public class Search {
 	}
 	
 	/**
+	 * Returns the total amount of results found by the search engine.
+	 * 
+	 * @return The number of found search results.
+	 */
+	public int getTotalResultCount() {
+		return search.getResultCount();
+	}
+	
+	/**
 	 * Generates a new search.
 	 * 
 	 * @param terms The search terms that shall be used when searching the web.

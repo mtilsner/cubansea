@@ -25,13 +25,9 @@ class SearchController {
 				}
 			}
 		} catch(NoMoreResultsException ne) {
-			render(contentType:'text/json') {
-				message(status:"done")
-			}
+			render("status:'done'}")
 		} catch(TechnicalError te) {
-			render(contentType:'text/json') {
-				message(status:"retry")
-			}
+			render("status:'retry'}")
 		}
 		session["current"]["lock"].release()
 	}
@@ -39,7 +35,9 @@ class SearchController {
 	def cluster = {
 		session["current"]["lock"].acquire()
 		def cluster = searchService.cluster(session["current"]["search"],params.cluster)
-		render(template: "cluster", model: [cluster:cluster, terms:session["current"]["terms"], initiallyExpandedResults:session["current"]["config"].initiallyExpandedResults])
+		render(template: "cluster", model: [cluster:cluster, terms:session["current"]["terms"], 
+		                                    initiallyExpandedResults:session["current"]["config"].initiallyExpandedResults,
+		                                    autoFetching: session["current"]["config"].autoFetching])
 		session["current"]["lock"].release()
 	}
 	
@@ -64,7 +62,10 @@ class SearchController {
     	if(session["current"]) {
     		session["current"]["lock"].acquire()
     		render(view: "search", model: [q: params.q, terms: session["current"]["terms"],
-    		                               clusters: session["current"]["search"].clusters])
+    		                               clusters: session["current"]["search"].clusters,
+    		                               autoFetching: session["current"]["config"].autoFetching,
+    		                               clusterCount: session["current"]["search"].clusters.size(),
+    		                               totalResultCount: session["current"]["search"].totalResultCount])
            	session["current"]["lock"].release()
     	} else
     		render(view: "portal",model: [q: params.q])

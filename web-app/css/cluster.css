@@ -53,34 +53,27 @@
 	margin-bottom: 8px;
 }
 
-.cluster_resultList .relevanceSquare_Background {
-	position: relative;
-	width: 10px;
-	height: 10px;
-	margin: 2px;
-	display: inline-block;
-	top: 3px;
-}
-
 .cluster_resultList .relevanceSquare {
 	position: relative;
 	width: 10px;
 	height: 10px;
-	left: -18px;
-	top: 4px;
-	border: 1px solid #666;
-	backgroud-color: #fff;
-	margin: 2px -14px 2px 2px;
+	margin: 2px;
+	top: 3px;
+	border: 0px none transparent;
 	display: inline-block;
 	cursor: pointer;
+	background-position: center center;
+	background-repeat: no-repeat;
 }
 
 .cluster_resultList .relevanceSquare.collapsed {
-	background: url('../images/expand.png') no-repeat center center;
+	margin: 2px 0px 2px 3px;
+	background-image: url('../images/expand.png');
 }
 
 .cluster_resultList .relevanceSquare.expanded {
-	background: url('../images/collapse.png') no-repeat center center;
+	margin: 2px 1px 2px 2px;
+	background-image: url('../images/collapse.png');
 }
 
 .cluster_resultList .resultHeader {
@@ -115,4 +108,12 @@
 
 .cluster_topbar .filter_summary_message {
 	margin-right: 6px;
+}
+
+.cluster_handle {
+	font-style: italic;
+}
+
+.cluster_handle a {
+	color: #333;
 }
