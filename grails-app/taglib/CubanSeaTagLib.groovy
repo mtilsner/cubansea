@@ -13,12 +13,13 @@ class CubanSeaTagLib {
 	
 	def wordCutter = {attrs ->
 		if(!attrs?.content) throw new Exception("Missing attribute: 'content' required!")
+		attrs.content = attrs.content.decodeHTML()
 		if(!attrs.length) attrs.length = 20
 		attrs.length = attrs.length.toInteger()
 		if (attrs.content.size() > attrs.length) 
-			out << attrs.content[0..(attrs.length-3)]+"..."
+			out << (attrs.content[0..(attrs.length-3)]+"...").encodeAsHTML()
 		else
-			out << attrs.content
+			out << attrs.content.encodeAsHTML()
 	}
 
 	def glower = {attrs,body ->
